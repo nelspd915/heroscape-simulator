@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { calcDamage, runBattle } from '../../utils/battle';
+import { flattenedAverage, flattenNegative, round } from '../../utils/math'
 import '../../index.css'
 import BattleDice from '../BattleDice/BattleDice';
 
@@ -12,10 +13,14 @@ export default class HeroscapeSimulator extends Component {
       attackAmount: 3,
       defenceAmount: 3,
       historyLength: 3,
-      singleBattleDamage: 0
+      battleCounter: 0,
+      singleBattleDamage: 0,
+      damageTracker: []
     };
 
     this.rollHistory = [];
+    this.damageTracker = [];
+    this.battleCounter = 0;
   }
 
   // Change handlers
@@ -25,12 +30,37 @@ export default class HeroscapeSimulator extends Component {
   handleHistoryLengthChange = (e) => { this.setState({historyLength: e.target.value}) };
 
   // Click handlers
-  handleRunSingleBattleClick = () => { this.runSingleBattle() };
-  handleRunBattlesClick = () => {
-    for (let i = 0; i < this.state.rollsAmount; i++) {
-      this.runSingleBattle();
-    }
+  handleRunSingleBattleClick = () => {
+    const damage = this.runSingleBattle()
+
+    this.setState({
+      avgDamage: flattenNegative(damage)
+    });
   };
+  handleRunBattlesClick = () => {
+    const damages = [];
+    for (let i = 0; i < this.state.rollsAmount; i++) {
+      damages.push(this.runSingleBattle());
+    }
+
+    this.setState({
+      avgDamage: flattenedAverage(damages)
+    });
+  };
+  handleClearClick = () => {
+    this.rollHistory = [];
+    this.damageTracker = [];
+    this.battleCounter = 0;
+    this.latestBattleRoll = undefined;
+    this.setState({
+      attackRoll: undefined,
+      defenceRoll: undefined,
+      battleCounter: this.battleCounter,
+      avgDamage: 0,
+      damageTracker: [],
+      cumAvgDamage: undefined
+    });
+  }
 
   render() {
     return(
@@ -84,14 +114,26 @@ export default class HeroscapeSimulator extends Component {
             className="button-control"
             type="button"
             onClick={this.handleRunSingleBattleClick}
-          >Run single battle</button>
+          >Single Battle</button>
           <button
-            hidden
             id="run-battles-button"
             className="button-control"
             type="button"
             onClick={this.handleRunBattlesClick}
-          >Run battles</button>
+          >Run Battles</button>
+          <button
+            id="clear-button"
+            className="button-control"
+            type="button"
+            onClick={this.handleClearClick}
+          >Clear</button>
+        </div>
+        <div className="spacer"></div>
+        <div className="container-row">
+          <h3 className="label">Average Damage:</h3>
+          <p className="result-value">{round(this.state.avgDamage ?? 0, 6)}</p>
+          <h3 className="label">Cumulative Average Damage:</h3>
+          <p className="result-value">{round(this.state.cumAvgDamage ?? 0, 6)}</p>
         </div>
         {this.renderRoll(this.state.attackRoll, this.state.defenceRoll, "currentRoll", true)}
         <div className="spacer"></div>
@@ -102,29 +144,45 @@ export default class HeroscapeSimulator extends Component {
   }
 
   runSingleBattle() {
-    console.log("meow")
+    // Save previous roll to history
+    this.rollHistory.unshift({
+      attackRoll: [...this.latestBattleRoll?.attackRoll ?? []],
+      defenceRoll: [...this.latestBattleRoll?.defenceRoll ?? []]
+    })
+
     const {attackRoll, defenceRoll} = runBattle(this.state.attackAmount, this.state.defenceAmount);
 
-    this.rollHistory.unshift({
-      attackRoll: [...this.state.attackRoll ?? []],
-      defenceRoll: [...this.state.defenceRoll ?? []]
-    })
+    // Update latest battle roll with new results
+    this.latestBattleRoll = {attackRoll, defenceRoll};
 
     if (this.rollHistory.length > this.state.historyLength) {
       this.rollHistory = this.rollHistory.slice(0, this.state.historyLength);
     }
 
+    this.battleCounter++;
+
+    // Track damage
+    const damage = calcDamage(attackRoll, defenceRoll);
+    if (this.damageTracker.length === 0) {
+      this.damageTracker = [damage];
+    } else {
+      this.damageTracker.push(damage);
+    }
+
     this.setState({
       attackRoll,
-      defenceRoll
+      defenceRoll,
+      battleCounter: this.battleCounter,
+      damageTracker: this.damageTracker,
+      cumAvgDamage: flattenedAverage(this.damageTracker)
     });
 
-    return calcDamage(attackRoll, defenceRoll);
+    return damage;
   }
 
   renderRoll(attackRoll, defenceRoll, key, background = false) {
 
-    const damage = calcDamage(attackRoll, defenceRoll)
+    const damage = calcDamage(attackRoll, defenceRoll);
 
     return ( 
       attackRoll?.length > 0 || defenceRoll?.length > 0 ?
@@ -143,16 +201,22 @@ export default class HeroscapeSimulator extends Component {
             {this.displayDice("defence", defenceRoll)}
           </div>
           <h3 className="label">Damage:</h3>
-          <p className="result-value">{damage < 0 ? 0 : damage}</p>
+          <p className="result-value">{flattenNegative(damage)}</p>
         </div> : null
     );
   }
 
   renderPreviousRolls() {
-    console.log(this.rollHistory)
-    return this.rollHistory.map((roll, i) => {
+    const rolls = this.rollHistory.map((roll, i) => {
       return this.renderRoll(roll.attackRoll, roll.defenceRoll, `previousRoll-${i}`);
     });
+
+    return [
+      ...rolls,
+      this.state.battleCounter > this.state.historyLength + 1 ? 
+        <div className="label elipsis" key="elipsis">. . . . . </div>
+        : null
+    ];
   }
 
   displayDice(type, rollResults = []) {

@@ -121,3 +121,8 @@ code {
 .spacer {
   padding-top: 20px;
 }
+
+.elipsis {
+  text-align: start;
+  margin-left: 40px;
+}

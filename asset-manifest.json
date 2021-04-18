@@ -1,22 +1,22 @@
 {
   "files": {
-    "main.css": "/heroscape-simulator/static/css/main.b222a188.chunk.css",
-    "main.js": "/heroscape-simulator/static/js/main.53e60f97.chunk.js",
-    "main.js.map": "/heroscape-simulator/static/js/main.53e60f97.chunk.js.map",
+    "main.css": "/heroscape-simulator/static/css/main.815644d4.chunk.css",
+    "main.js": "/heroscape-simulator/static/js/main.6d6b7958.chunk.js",
+    "main.js.map": "/heroscape-simulator/static/js/main.6d6b7958.chunk.js.map",
     "runtime-main.js": "/heroscape-simulator/static/js/runtime-main.7d4c5794.js",
     "runtime-main.js.map": "/heroscape-simulator/static/js/runtime-main.7d4c5794.js.map",
-    "static/js/2.24507e09.chunk.js": "/heroscape-simulator/static/js/2.24507e09.chunk.js",
-    "static/js/2.24507e09.chunk.js.map": "/heroscape-simulator/static/js/2.24507e09.chunk.js.map",
+    "static/js/2.2e1f6c92.chunk.js": "/heroscape-simulator/static/js/2.2e1f6c92.chunk.js",
+    "static/js/2.2e1f6c92.chunk.js.map": "/heroscape-simulator/static/js/2.2e1f6c92.chunk.js.map",
     "static/js/3.ba0fffcd.chunk.js": "/heroscape-simulator/static/js/3.ba0fffcd.chunk.js",
     "static/js/3.ba0fffcd.chunk.js.map": "/heroscape-simulator/static/js/3.ba0fffcd.chunk.js.map",
     "index.html": "/heroscape-simulator/index.html",
-    "static/css/main.b222a188.chunk.css.map": "/heroscape-simulator/static/css/main.b222a188.chunk.css.map",
-    "static/js/2.24507e09.chunk.js.LICENSE.txt": "/heroscape-simulator/static/js/2.24507e09.chunk.js.LICENSE.txt"
+    "static/css/main.815644d4.chunk.css.map": "/heroscape-simulator/static/css/main.815644d4.chunk.css.map",
+    "static/js/2.2e1f6c92.chunk.js.LICENSE.txt": "/heroscape-simulator/static/js/2.2e1f6c92.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.7d4c5794.js",
-    "static/js/2.24507e09.chunk.js",
-    "static/css/main.b222a188.chunk.css",
-    "static/js/main.53e60f97.chunk.js"
+    "static/js/2.2e1f6c92.chunk.js",
+    "static/css/main.815644d4.chunk.css",
+    "static/js/main.6d6b7958.chunk.js"
   ]
 }

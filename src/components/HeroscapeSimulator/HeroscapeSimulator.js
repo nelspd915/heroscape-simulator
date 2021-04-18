@@ -135,6 +135,7 @@ export default class HeroscapeSimulator extends Component {
           <h3 className="label">Cumulative Average Damage:</h3>
           <p className="result-value">{round(this.state.cumAvgDamage ?? 0, 6)}</p>
         </div>
+        <div className="spacer"></div>
         {this.renderRoll(this.state.attackRoll, this.state.defenceRoll, "currentRoll", true)}
         <div className="spacer"></div>
         <div className="spacer"></div>

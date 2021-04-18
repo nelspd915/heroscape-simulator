@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/heroscape-simulator/static/css/main.ad64da71.chunk.css",
+    "main.js": "/heroscape-simulator/static/js/main.c877acb0.chunk.js",
+    "main.js.map": "/heroscape-simulator/static/js/main.c877acb0.chunk.js.map",
+    "runtime-main.js": "/heroscape-simulator/static/js/runtime-main.f14a74b7.js",
+    "runtime-main.js.map": "/heroscape-simulator/static/js/runtime-main.f14a74b7.js.map",
+    "static/js/2.23c8f8ca.chunk.js": "/heroscape-simulator/static/js/2.23c8f8ca.chunk.js",
+    "static/js/2.23c8f8ca.chunk.js.map": "/heroscape-simulator/static/js/2.23c8f8ca.chunk.js.map",
+    "static/js/3.a6874d36.chunk.js": "/heroscape-simulator/static/js/3.a6874d36.chunk.js",
+    "static/js/3.a6874d36.chunk.js.map": "/heroscape-simulator/static/js/3.a6874d36.chunk.js.map",
+    "index.html": "/heroscape-simulator/index.html",
+    "static/css/main.ad64da71.chunk.css.map": "/heroscape-simulator/static/css/main.ad64da71.chunk.css.map",
+    "static/js/2.23c8f8ca.chunk.js.LICENSE.txt": "/heroscape-simulator/static/js/2.23c8f8ca.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.f14a74b7.js",
+    "static/js/2.23c8f8ca.chunk.js",
+    "static/css/main.ad64da71.chunk.css",
+    "static/js/main.c877acb0.chunk.js"
+  ]
+}

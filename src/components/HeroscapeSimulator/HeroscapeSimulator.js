@@ -86,6 +86,7 @@ export default class HeroscapeSimulator extends Component {
             onClick={this.handleRunSingleBattleClick}
           >Run single battle</button>
           <button
+            hidden
             id="run-battles-button"
             className="button-control"
             type="button"

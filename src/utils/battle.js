@@ -1,27 +1,14 @@
-import constants from "./constants.json";
+import constants from '../data/constants.json'
 
 export function runBattle(attack, defence) {
-    console.log("runBattle:", attack, defence);
 
     // Attack roll
-    const attackResultDice = rollDice(attack, 6);
-    const attackResult = examineDice(attackResultDice, constants.ATTACK_HITS);
-    console.log("Attack");
-    console.log(attackResultDice);
-    console.log(attackResult);
+    const attackRoll = rollDice(attack, 6);
 
     // Defence roll
-    const defenceResultDice = rollDice(defence, 6);
-    const defenceResult = examineDice(defenceResultDice, constants.DEFENCE_HITS);
-    console.log("Defence");
-    console.log(defenceResultDice);
-    console.log(defenceResult);
+    const defenceRoll = rollDice(defence, 6);
 
-    const damage = attackResult - defenceResult;
-
-    console.log("DAMAGE:", damage < 0 ? 0 : damage);
-
-    return damage < 0 ? 0 : damage;
+    return {attackRoll, defenceRoll};
 }
 
 function rollDice(amount, sides) {
@@ -33,13 +20,21 @@ function rollDice(amount, sides) {
     return results;
 }
 
-function examineDice(resultDice, hitTargets) {
+export function findDiceHits(resultDice, hitTargets) {
     let hits = 0;
-    resultDice.forEach(die => {
+    resultDice?.forEach(die => {
         if (hitTargets.includes(die)) {
             hits++;
         }
-    })
+    });
 
     return hits;
+}
+
+export function calcDamage(attackRoll, defenceRoll) {
+    const attackHits = findDiceHits(attackRoll, constants.ATTACK_HITS);
+    const defenceHits = findDiceHits(defenceRoll, constants.DEFENCE_HITS);
+    const damage = attackHits - defenceHits;
+
+    return damage;
 }
